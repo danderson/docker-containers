@@ -1,6 +1,6 @@
 FROM alpine:edge
 
-ENV VPN_CONFIG_PATH="/openvpn.conf"
+ENV TREADSTONE_VPN_CONFIG="/openvpn.conf" TREADSTONE_EXPOSE_PORTS=""
 
 COPY . /tmp/treadstone
 RUN /tmp/treadstone/build.sh
