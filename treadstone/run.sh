@@ -30,13 +30,19 @@ done
 
 ip tuntap add dev vpn mode tun user vpn
 
-su -c "openvpn --config ${TREADSTONE_VPN_CONFIG} --iproute /treadstone/iproute2.sh --route-noexec --route-up /treadstone/route-up.sh --script-security 2 --port 1194" vpn &
+# Poor man's Mutually Assured Destruction init. Run OpenVPN in a
+# subshell, but kill whatever is keeping the container alive if it
+# fails.
+INIT=$$
+(
+    su -c "openvpn --config ${TREADSTONE_VPN_CONFIG} --iproute /treadstone/iproute2.sh --route-noexec --route-up /treadstone/route-up.sh --script-security 2 --port 1194" vpn
+    kill -9 $INIT
+)&
 
 while [ ! -f /tmp/vpn-up ]; do
     sleep 1
 done
 
-echo $#
 if [ "$#" = "0" ]; then
     exec /bin/sh
 else
