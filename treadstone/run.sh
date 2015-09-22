@@ -35,7 +35,7 @@ ip tuntap add dev vpn mode tun user vpn
 # fails.
 INIT=$$
 (
-    su -c "openvpn --config ${TREADSTONE_VPN_CONFIG} --iproute /treadstone/iproute2.sh --route-noexec --route-up /treadstone/route-up.sh --script-security 2 --port 1194" vpn
+    su -c "openvpn --config ${TREADSTONE_VPN_CONFIG} ${TREADSTONE_VPN_ARGS} --iproute /treadstone/iproute2.sh --route-noexec --route-up /treadstone/route-up.sh --script-security 2 --port 1194" vpn
     kill -9 $INIT
 )&
 
