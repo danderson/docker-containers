@@ -1,1 +1,1 @@
-FROM golang:onbuild
+FROM danderson/go-app
