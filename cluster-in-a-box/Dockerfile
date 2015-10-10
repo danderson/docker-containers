@@ -1,9 +1,10 @@
-FROM alpine
+FROM alpine:edge
 
 ENV GOPATH=/go GOBIN=/usr/bin
 
 RUN \
   echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >>/etc/apk/repositories &&\
+  echo "http://dl-4.alpinelinux.org/alpine/edge/community" >>/etc/apk/repositories &&\
   apk -U add go git gcc libc-dev libltdl libtool libgcc openssl vault@testing wget &&\
   mkdir -p /go/src &&\
   go get -d github.com/cloudflare/cfssl/... &&\
